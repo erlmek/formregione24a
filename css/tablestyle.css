@@ -12,11 +12,59 @@ td {
     padding: 10px;
 }
 
-tr:nth-child(even) {
-    background-color: #00cf45;
-}
-
 h1 {
     color: red;
 }
 
+.cellhead {
+    background-color: #DBDCDC
+}
+
+
+tr:nth-child(even) {
+    background-color: #e6f7ff;
+}
+
+tr:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+
+.btn1 {
+    background-color: #8b0000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style the dropdown itself */
+select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+/* Change border on focus */
+select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+}
+
+/* Style the options inside */
+option {
+    padding: 8px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Optional: hover effect for options (only visible on some browsers) */
+option:hover {
+    background-color: #f0f0f0;
+}

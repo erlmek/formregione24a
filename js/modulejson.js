@@ -22,6 +22,7 @@ async function postObjectAsJson(url, object, httpVerbum) {
     return [responseJson, response.status];
 }
 
+//http://localhost:8080/kommune/7777
 async function restDelete(url) {
     const fetchOptions = {
         method: "DELETE",
@@ -37,4 +38,15 @@ async function restDelete(url) {
     return response;
 }
 
-export {fetchAnyUrl, postObjectAsJson};
+const urlRegioner = "http://localhost:8080/regioner"
+
+let regionMap = new Map()
+
+async function fetchRegioner() {
+    const regioner = await fetchAnyUrl(urlRegioner)
+    regioner.forEach(region => regionMap.set(region.navn, region))
+    return regionMap
+}
+
+
+export {fetchAnyUrl, postObjectAsJson,  restDelete, fetchRegioner, regionMap};
