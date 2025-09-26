@@ -1,20 +1,20 @@
-console.log("jeg er i form region")
+console.log("jeg er i formregionscreen")
 
-const urlPostRegion = "http://localhost:8080/region"
+document.addEventListener('DOMContentLoaded', createFormEventListener);
+let formRegion;
+const urlRegion = "http://localhost:8080/region"
 
-function createRegion() {
-    const region = {}
-    region.kode = "8799"
-    region.navn = "KEAxxx"
-    region.href = "http:kea"
-    return region
+function createFormEventListener() {
+    formRegion = document.getElementById("formRegion");
+    formRegion.addEventListener("submit", handleFormSubmit);
+    console.log(formRegion);
 }
 
-async function postDataAsJson(url, obj){
-    const objectAsJsonString = JSON.stringify(obj);
+async function postObjectAsJson(url, object, httpVerbum) {
+    const objectAsJsonString = JSON.stringify(object);
     console.log(objectAsJsonString);
     const fetchOptions = {
-        method: "POST",
+        method: httpVerbum,
         headers: {
             "content-type": "application/json"
         },
@@ -22,7 +22,6 @@ async function postDataAsJson(url, obj){
     };
 
     const response = await fetch(url,fetchOptions);
-
     if (!response.ok) {
         const errorMessage = await response.text();
         throw new Error(errorMessage);
@@ -30,18 +29,31 @@ async function postDataAsJson(url, obj){
     return response.json();
 }
 
-async function postRegion(region) {
+async function postFormDataAsJson(url, formData) {
+    const plainFormData = Object.fromEntries(formData.entries());
+    console.log(plainFormData);
     try {
-        const nogetjson = await postDataAsJson(urlPostRegion, region);
-        console.log("noget json");
-        console.log(nogetjson);
-    } catch (e) {
-        console.error(e);
+        console.log("postform")
+        const responseData = await postObjectAsJson(url, plainFormData, "POST");
+        alert("Region gemt");
+        return responseData; // return JSON so caller can use it
+    } catch (error) {
+        console.error(error.message);
+        alert(error.message);
     }
 }
 
-const reg1 = createRegion()
-console.log(reg1)
-postRegion(reg1);
+async function handleFormSubmit(event) {
+    //Vi handler submitten her i stedet for default html behaviour
+    event.preventDefault();
+    try {
+        const formData = new FormData(formRegion);
+        console.log(formData);
+        const responseData = await postFormDataAsJson(urlRegion, formData);
+        console.log(responseData);
+    } catch (error) {
+        alert(error.message);
+        console.error(error);
+    }
 
-
+}
